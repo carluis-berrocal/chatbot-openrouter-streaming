@@ -1,0 +1,7 @@
+[build]
+  publish = "dist"               # Carpeta con el contenido final del frontend (puede ser 'build', 'public', etc.)
+  command = "npm run build"      # Comando para compilar tu proyecto
+  functions = "netlify/functions" # Carpeta donde Netlify buscará las functions
+
+[dev]
+  functions = "netlify/functions"

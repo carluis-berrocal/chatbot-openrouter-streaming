@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+.loading {
+  font-style: italic;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid #ccc;
+  border-top-color: #0077ff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
