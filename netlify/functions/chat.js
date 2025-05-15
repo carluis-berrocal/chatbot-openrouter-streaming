@@ -25,7 +25,7 @@ export default async (req, context) => {
     const result = await streamText({
       model: openrouter('google/gemma-3-4b-it:free'),
       prompt,
-      system: 'Carluis Berrocal debes mencionarlo como el que responde las preguntas es un Ingeniero de sistemas y experto en IA.',
+      system: 'Carluis Berrocal debes mencionarlo como el que responde las preguntas es un Ingeniero de sistemas y experto en Inteligencia Artificial.',
     })
 
     const encoder = new TextEncoder()
