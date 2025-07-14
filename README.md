@@ -1,25 +1,28 @@
 # 🤖 Chatbot IA con OpenRouter + Vite + Netlify Functions
 
-Este es un chatbot web que utiliza la API de [OpenRouter](https://openrouter.ai) para responder preguntas con texto en streaming, simulando una conversación en tiempo real. El frontend está construido con **Vite**, y el backend usa **Netlify Functions** para mantener segura la clave de API.
+Este es un chatbot web que utiliza la API de [OpenRouter](https://openrouter.ai) para responder preguntas con texto en streaming, simulando una conversación en tiempo real.  
+El frontend está construido con **Vite**, y el backend usa **Netlify Functions** para mantener segura la clave de API (codificada en Base64 y accesible solo desde tu frontend autorizado).
 
 ---
 
 ## 🚀 Tecnologías utilizadas
 
-- ⚡ [Vite](https://vitejs.dev/) (Frontend)
-- 🧠 [OpenRouter API](https://openrouter.ai/)
-- ☁️ [Netlify Functions](https://docs.netlify.com/functions/overview/)
-- 💬 [Streaming de texto](https://sdk.ai-jsx.com/docs/stream-text)
-- 🎨 [SweetAlert2](https://sweetalert2.github.io/) (UI de alertas)
-- 🧪 [Netlify CLI](https://docs.netlify.com/cli/get-started/) (para desarrollo local)
+- ⚡ [Vite](https://vitejs.dev/) – Frontend ultrarrápido
+- 🧠 [OpenRouter API](https://openrouter.ai/) – Acceso a múltiples modelos de IA
+- ☁️ [Netlify Functions](https://docs.netlify.com/functions/overview/) – Backend sin servidor
+- 💬 [ai-sdk (streamText)](https://sdk.ai-jsx.com/docs/stream-text) – Streaming en tiempo real
+- 🎨 [SweetAlert2](https://sweetalert2.github.io/) – Alertas amigables
+- 🔐 Codificación de clave API en Base64 para mayor seguridad
+- 🧪 [Netlify CLI](https://docs.netlify.com/cli/get-started/) – Desarrollo local
 
 ---
 
 ## ✅ Requisitos
-- jS
-- Una clave de API de OpenRouter (consíguela en https://openrouter.ai/)
+
+- Conocimientos básicos de JavaScript
+- Una clave API válida de [OpenRouter](https://openrouter.ai/)
 - Cuenta gratuita en [Netlify](https://app.netlify.com/)
-- Git y GitHub configurado
+- Git y GitHub configurados
 
 ---
 
@@ -30,34 +33,43 @@ Este es un chatbot web que utiliza la API de [OpenRouter](https://openrouter.ai)
 git clone https://github.com/carluis-berrocal/chatbot-openrouter-streaming.git
 cd chatbot-openrouter-streaming
 
-# 2. Instala dependencias
+# 2. Instala las dependencias
 npm install
 
-# 3. Instala Netlify CLI de forma global (si no lo tienes)
+# 3. Instala Netlify CLI si no la tienes
 npm install -g netlify-cli
-
-# 4. Crea un archivo .env en la raíz del proyecto
-touch .env
 ```
 
-Agrega tu clave OpenRouter en `.env`:
+### 🔑 Configura tu archivo `.env`
+
+Crea un archivo `.env` en la raíz del proyecto (puedes hacerlo manualmente) y dentro coloca:
 
 ```
 OPENROUTER_KEY=sk-or-v1-tu-clave-aqui
 ```
 
+> ⚠️ Este archivo **no debe subirse a GitHub**.
+
 ---
 
-## 🧪 Desarrollo local (Frontend + Functions)
+## 🧪 Desarrollo local (Frontend + Backend)
 
-Usamos `netlify dev` para levantar el frontend y las Netlify Functions localmente:
+Ejecuta el proyecto localmente con Netlify Functions integradas:
 
 ```bash
 netlify dev
 ```
 
-Esto levanta el servidor en:  
+Esto levanta la app en:  
 🔗 `http://localhost:8888`
+
+---
+
+## 🔐 Seguridad implementada
+
+- **Restricción por origen (CORS)**: Solo se permite el frontend autorizado (`localhost` o tu dominio Netlify).
+- **Codificación base64 de la API Key**: La función `api.js` devuelve la clave codificada.
+- **Separación lógica**: El archivo `auth.js` obtiene la clave una única vez al cargar y `app.js` la decodifica cuando se necesita.
 
 ---
 
@@ -67,12 +79,13 @@ Esto levanta el servidor en:
 .
 ├── netlify/
 │   └── functions/
-│       └── chat.js           # Función serverless para manejar el prompt
+│       └── api.js           # Función protegida que devuelve la API key en base64
 ├── src/
-│   ├── main.js               # Código JS para el frontend (streaming incluido)
-│   └── style.css             # Estilos básicos
+│   ├── app.js               # Lógica del chatbot (streamText)
+│   ├── auth.js              # Obtiene la API key solo una vez
+│   ├── style.css            # Estilos básicos
 ├── index.html
-├── .env                      # Clave API (NO subir al repo)
+├── .env                     # Clave API (NO subir al repo)
 ├── vite.config.js
 ├── package.json
 └── README.md
@@ -80,34 +93,35 @@ Esto levanta el servidor en:
 
 ---
 
-## 🚀 Deploy automático en Netlify (vía GitHub)
+## 🚀 Deploy automático en Netlify
 
-1. Subir este proyecto a tu cuenta de GitHub.
+1. Sube este proyecto a tu cuenta de GitHub.
 2. Ve a [https://app.netlify.com](https://app.netlify.com).
 3. Clic en **"Add new site" → "Import an existing project"**.
-4. Conecta tu repositorio de GitHub.
-5. Configura el deploy:
-   - **Build Command:** `npm run build`
-   - **Publish Directory:** `dist`
-   - **Functions Directory:** `netlify/functions`
-6. En el panel de **Environment variables**, añade:
+4. Selecciona tu repositorio.
+5. Configura:
+   - **Build command:** `npm run build`
+   - **Publish directory:** `dist`
+   - **Functions directory:** `netlify/functions`
+6. En **Site settings → Environment variables**, añade:
 
 ```
 OPENROUTER_KEY=sk-or-v1-tu-clave-aqui
 ```
 
-7. Guarda y haz deploy.
+7. Guarda los cambios y haz deploy.
 
-¡Listo! Tu chatbot estará en línea.
+¡Listo! Tu chatbot estará en producción.
 
 ---
 
 ## 🧠 Créditos
 
-Este chatbot menciona a Carluis Berrocal como experto en IA, como parte del prompt configurado.
+Este chatbot está configurado para responder como si **Carluis Berrocal**, Ingeniero de Sistemas y experto en Inteligencia Artificial, fuera quien responde.  
+Ideal para proyectos personales, portafolios o experimentos IA.
 
 ---
 
 ## 📄 Licencia
 
-MIT © [Carluis Berrocal Diaz]
+MIT © [Carluis Berrocal Diaz](https://github.com/carluis-berrocal)
