@@ -120,7 +120,7 @@ OPENROUTER_KEY=sk-or-v1-tu-clave-aqui
 Este chatbot está configurado para responder como si **Carluis Berrocal**, Ingeniero de Sistemas y experto en Inteligencia Artificial, fuera quien responde.  
 Ideal para proyectos personales, portafolios o experimentos IA.
 
-ver el proyecto en: [aicarluis.netlify.app](https://aicarluis.netlify.app/)
+ver el proyecto en: [aicarluis.netlify.app](https://aicarluis.netlify.app)
 
 ---
 
